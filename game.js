@@ -8,10 +8,13 @@ let currentPlayer = player1;
 //give the boxes empty arrays
 // this is to call the first nested array board[0][0]
 const board = [
-        ["_", "_", "_"], 
-        ["_", "_", "_"],
-        ["_", "_", "_"]
+        // ["_", "_", "_", "_", "_", "_", "_", "_", "_"]    
+    ["_", "_", "_"], 
+    ["_", "_", "_"],
+    ["_", "_", "_"]
     ];
+
+
 // const box = {
 //     "0": "_",
 //     "1": "_",
@@ -45,6 +48,16 @@ const clickedBox = function() {
               }
         }
     })
+}
+
+const checkWinner = function () {
+
+    for (let i = 0; i < board.length; i++) {
+        if (board[i][0] === currentPlayer && board[i][1] == currentPlayer && board[i][2] === currentPlayer) {
+            return true;
+        }
+    
+    }
 }
 
 //call the functioin to add click event listener to boxes
