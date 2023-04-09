@@ -28,8 +28,12 @@ $(function(){
   //add event listener for all boxes and listen for a click. Execute the
   const clickedBox = function() {
     $('.box').on('click', function() {
+        // When box is clicked function gets id of the clicked element,
         const id = this.id;
+
+        //  calculates the row and col values based on the id using the mathfloor
         const row = Math.floor(id/3);
+
         const col = id % 3;
     
         //check is the box is not already filled
@@ -54,18 +58,19 @@ $(function(){
   const checkRows = function () {
     for (let i = 0; i < board.length; i++) {
         if (board[i][0] === currentPlayer && board[i][1] === currentPlayer && board[i][2] === currentPlayer) {
-          console.log(`${currentPlayer} Wins`)
-          $('.box').off('click')
+            $('#message').text(`${currentPlayer} Wins`);
+            $('.box').off('click');
       }     
-    return false;
-    };
+
   }
+  return false;
+}
 
   const checkColumns = () => {
     for (let i = 0; i < board[0].length; i++) {
         if (board[0][i] === currentPlayer && board[1][i] === currentPlayer && board[2][i] === currentPlayer) {
-            console.log(`${currentPlayer} Wins`)
-            $('.box').off('click')
+            $('#message').text(`${currentPlayer} Wins`);
+            $('.box').off('click');
         }
     return false;
     };
@@ -73,14 +78,27 @@ $(function(){
 
   const checkDiagonals = () => {
     if (board[0][0] === currentPlayer && board[1][1] === currentPlayer && board[2][2] === currentPlayer) {
-        console.log(`${currentPlayer} Wins`)
+        $('#message').text(`${currentPlayer} Wins`);
+        $('.box').off('click');
     } else if (board[0][2] === currentPlayer && board[1][1] === currentPlayer && board[2][0] === currentPlayer) {
-        console.log(`${currentPlayer} Wins`)
-        $('.box').off('click')
+        $('#message').text(`${currentPlayer} Wins`);
+        $('.box').off('click');
     }
     return false;
   }
   
+  const checkTie = () => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[0].length; j++) {
+        if (board[i][j] === '_') {
+          return false;
+        }
+      }
+    }
+    $('#message').text('Tie');
+    $('.box').off('click');
+    return true;
+}
 
   //call the functioin to add click event listener to boxes
   clickedBox();
@@ -90,3 +108,21 @@ $(function(){
         location.reload();
       });
 });
+
+
+function startConfetti() {
+    // create a new instance of the confetti library
+    const confettiSettings = {
+      target: 'confetti-canvas',
+      size: 1,
+      max: 200,
+      animate: true,
+      props: ['circle', 'square', 'triangle', 'line'],
+      colors: [[255, 0, 0], [0, 255, 0], [0, 0, 255]],
+      clock: 25,
+    };
+    const confetti = new ConfettiGenerator(confettiSettings);
+  
+    // start the confetti animation
+    confetti.render();
+  }
